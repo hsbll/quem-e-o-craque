@@ -1,0 +1,11 @@
+{
+  "name": "Quem é o Craque?",
+  "short_name": "Craque",
+  "description": "Adivinhe o jogador de futebol pelos escudos da carreira.",
+  "start_url": "./",
+  "display": "standalone",
+  "background_color": "#050d0a",
+  "theme_color": "#050d0a",
+  "lang": "pt-BR",
+  "icons": [{ "src": "assets/img/favicon.svg", "sizes": "any", "type": "image/svg+xml", "purpose": "any" }]
+}
