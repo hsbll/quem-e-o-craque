@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <title>Quem é o Craque?</title>
+  <meta name="description" content="Adivinhe o jogador de futebol pelos escudos dos clubes da carreira. Um craque novo por dia.">
+  <meta name="theme-color" content="#070d1a">
+  <meta property="og:title" content="Quem é o Craque?">
+  <meta property="og:description" content="Adivinhe o jogador pelos escudos da carreira. Um craque novo por dia.">
+  <meta property="og:type" content="website">
+  <link rel="icon" href="assets/img/favicon.svg" type="image/svg+xml">
+  <link rel="manifest" href="site.webmanifest">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans:wght@400;500;700&family=Silkscreen:wght@400;700&family=VT323&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="assets/css/style.css">
+</head>
+<body data-screen="home" data-state="loading">
+
+  <!-- ===================== TELA INICIAL ===================== -->
+  <section class="home" id="home" aria-label="Início">
+    <div class="sky" aria-hidden="true"></div>
+    <div class="scene" id="scene" aria-hidden="true"></div>
+    <div class="home-fade" aria-hidden="true"></div>
+
+    <div class="corner corner-left">
+      <button type="button" class="px-btn" data-open="dlgHelp" aria-label="Como jogar">?</button>
+    </div>
+    <div class="corner corner-right">
+      <button type="button" class="px-btn" data-open="dlgStats" aria-label="Estatísticas">
+        <svg viewBox="0 0 8 8" shape-rendering="crispEdges"><rect x="1" y="4" width="1" height="3"/><rect x="3.5" y="1" width="1" height="6"/><rect x="6" y="3" width="1" height="4"/></svg>
+      </button>
+      <button type="button" class="px-btn" data-open="dlgSettings" aria-label="Ajustes">
+        <svg viewBox="0 0 8 8" shape-rendering="crispEdges"><rect x="3" y="0" width="2" height="8"/><rect x="0" y="3" width="8" height="2"/><rect x="1" y="1" width="6" height="6" fill="none" stroke="currentColor"/></svg>
+      </button>
+    </div>
+
+    <div class="title-block">
+      <h1 class="logo" data-text="CRAQUE?"><small>quem é o</small>CRAQUE?</h1>
+      <p class="subtitle">O JOGO DA CARREIRA</p>
+      <p class="tagline">escudo por escudo · menos escudos, mais pontos</p>
+    </div>
+
+    <div class="home-cta">
+      <div class="cta-top">
+        <button type="button" class="link-mono" data-open="dlgHelp">COMO JOGAR ▸</button>
+        <div class="diff-toggle" role="group" aria-label="Dificuldade">
+          <button type="button" data-diff="facil" aria-pressed="true">FÁCIL</button>
+          <button type="button" data-diff="dificil" aria-pressed="false">DIFÍCIL</button>
+        </div>
+      </div>
+      <button type="button" class="cta" id="btnPlayDaily">▶ <span id="ctaLabel">ENTRAR EM CAMPO</span> ◀</button>
+      <div class="cta-row">
+        <span class="mono-label" id="homeDay">CRAQUE DO DIA #1</span>
+        <div class="cta-row-buttons">
+          <button type="button" class="chip-btn" id="btnPlayFree">TREINO LIVRE ∞</button>
+        </div>
+      </div>
+    </div>
+
+    <div class="ruler" aria-hidden="true">
+      <span style="--y:0">0'</span><span style="--y:.25">22'</span><span style="--y:.5">45'</span><span style="--y:.75">67'</span><span style="--y:1">90'</span>
+    </div>
+  </section>
+
+  <!-- ===================== JOGO ===================== -->
+  <section class="play" id="play" aria-label="Jogo">
+    <div class="night" aria-hidden="true"></div>
+    <div class="dust" id="dust" aria-hidden="true"></div>
+
+    <div class="play-wrap">
+      <header class="play-top">
+        <button type="button" class="px-btn" id="btnHome" aria-label="Voltar ao início">◀</button>
+        <span class="mono-label" id="modeLabel">CRAQUE DO DIA #1</span>
+        <div class="play-top-right">
+          <button type="button" class="px-btn" data-open="dlgHelp" aria-label="Como jogar">?</button>
+          <button type="button" class="px-btn" data-open="dlgStats" aria-label="Estatísticas">
+            <svg viewBox="0 0 8 8" shape-rendering="crispEdges"><rect x="1" y="4" width="1" height="3"/><rect x="3.5" y="1" width="1" height="6"/><rect x="6" y="3" width="1" height="4"/></svg>
+          </button>
+          <button type="button" class="px-btn" data-open="dlgSettings" aria-label="Ajustes">
+            <svg viewBox="0 0 8 8" shape-rendering="crispEdges"><rect x="3" y="0" width="2" height="8"/><rect x="0" y="3" width="8" height="2"/><rect x="1" y="1" width="6" height="6" fill="none" stroke="currentColor"/></svg>
+          </button>
+        </div>
+      </header>
+
+      <div class="hud">
+        <div class="hud-box">
+          <span>TEMPORADA</span>
+          <strong class="cyan" id="hudSeason">----</strong>
+        </div>
+        <div class="hud-mid">
+          <ol class="squares" id="trail" aria-label="Clubes da carreira"></ol>
+          <span id="stepLabel">AQUECENDO</span>
+        </div>
+        <div class="hud-box right">
+          <span>VALE</span>
+          <strong class="pink" id="worth">---</strong>
+        </div>
+      </div>
+
+      <main class="panel" id="crestCard" aria-live="polite">
+        <p class="panel-label" id="panelLabel">CLUBE 1 DE ?</p>
+        <div class="crest" id="crest"><div class="skeleton"></div></div>
+        <p class="crest-years" id="crestYears"></p>
+        <p class="crest-name" id="crestName">Aquecendo os dados…</p>
+        <p class="panel-hint">▼ menos escudos, mais pontos ▼</p>
+        <p class="miss-flash" id="missFlash" aria-hidden="true">✗ NÃO É ELE</p>
+      </main>
+
+      <ul class="misses" id="misses" aria-label="Chutes errados"></ul>
+
+      <div class="dock">
+        <form id="guessForm" autocomplete="off" novalidate>
+          <div class="field">
+            <input id="guess" type="text" placeholder="quem é o craque?" aria-label="Nome do jogador"
+                   role="combobox" aria-autocomplete="list" aria-expanded="false" aria-controls="suggestions"
+                   autocapitalize="words" spellcheck="false" enterkeyhint="send" disabled>
+            <ul id="suggestions" class="suggestions" role="listbox" hidden></ul>
+          </div>
+          <div class="dock-actions">
+            <button type="button" class="btn dark" id="btnSkip" disabled>PULAR ▼</button>
+            <button type="submit" class="btn pink" id="btnGuess" disabled>CHUTAR</button>
+          </div>
+        </form>
+
+        <div class="done" id="donePanel" hidden>
+          <p id="doneText"></p>
+          <div class="dock-actions">
+            <button type="button" class="btn dark" id="btnShowResult">SÚMULA</button>
+            <button type="button" class="btn cyan" id="btnNext">PRÓXIMO ∞</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <div class="career-ruler" id="careerRuler" aria-hidden="true"></div>
+  </section>
+
+  <!-- ===================== REVELAÇÃO DO TIER ===================== -->
+  <div class="reveal" id="reveal" hidden>
+    <div class="reveal-inner" id="revealInner"></div>
+  </div>
+
+  <!-- ===================== DIÁLOGOS ===================== -->
+  <dialog id="dlgResult" class="sheet" aria-label="Súmula">
+    <button type="button" class="dialog-close" data-close aria-label="Fechar">X</button>
+    <div id="resultBody"></div>
+  </dialog>
+
+  <dialog id="dlgHelp" aria-labelledby="helpTitle">
+    <button type="button" class="dialog-close" data-close aria-label="Fechar">X</button>
+    <p class="panel-label">MANUAL DO JOGO</p>
+    <h2 id="helpTitle">Como jogar</h2>
+    <ol class="steps">
+      <li>Aparece o escudo do <b>primeiro clube</b> da carreira de um jogador.</li>
+      <li><b>Chute um nome</b> (a lista ajuda com erros de digitação) ou <b>pule</b>.</li>
+      <li>Errou ou pulou? Entra em campo o <b>próximo clube</b> da carreira.</li>
+      <li>Acerte antes de a carreira acabar. Quanto menos escudos, mais pontos.</li>
+    </ol>
+    <h3>PONTUAÇÃO</h3>
+    <p>A rodada começa valendo <b>10 pontos por clube</b> da carreira. Cada escudo revelado tira 10 pontos.
+       Acertou de primeira? Leva tudo. A carreira acabou sem acerto? Zero.</p>
+    <h3>MODOS</h3>
+    <p><b>Craque do dia:</b> o mesmo jogador para todo mundo, um por dia.<br>
+       <b>Treino livre:</b> jogadores sem limite.</p>
+    <h3>DIFICULDADE</h3>
+    <p><b>Fácil:</b> jogadores famosos e os anos de cada passagem.<br>
+       <b>Difícil:</b> mais jogadores no sorteio e <b>sem os anos</b> — só o escudo.</p>
+    <button type="button" class="btn cyan wide" data-close>BORA JOGAR ▶</button>
+  </dialog>
+
+  <dialog id="dlgStats" aria-labelledby="statsTitle">
+    <button type="button" class="dialog-close" data-close aria-label="Fechar">X</button>
+    <p class="panel-label">SEU HISTÓRICO</p>
+    <h2 id="statsTitle">Estatísticas</h2>
+    <div id="statsBody"></div>
+  </dialog>
+
+  <dialog id="dlgSettings" aria-labelledby="settingsTitle">
+    <button type="button" class="dialog-close" data-close aria-label="Fechar">X</button>
+    <p class="panel-label">VESTIÁRIO</p>
+    <h2 id="settingsTitle">Ajustes</h2>
+    <form id="settingsForm">
+      <label class="switch"><span>Mostrar nome do clube<small>Deixa bem mais fácil</small></span><input type="checkbox" id="setNames"></label>
+      <label class="switch"><span>Escudos em pixel art<small>Desligue para ver o escudo nítido</small></span><input type="checkbox" id="setPixel"></label>
+      <fieldset class="choices">
+        <legend>Dificuldade</legend>
+        <div id="diffOptions"></div>
+      </fieldset>
+      <h3>TREINO LIVRE</h3>
+      <label class="switch"><span>Categorias de base e times B<small>Inclui sub-20, reservas e afins</small></span><input type="checkbox" id="setYouth"></label>
+    </form>
+    <p class="fine" id="dataInfo"></p>
+    <p class="fine">Dados abertos do <a href="https://www.wikidata.org" target="_blank" rel="noopener">Wikidata</a>,
+      escudos do <a href="https://commons.wikimedia.org" target="_blank" rel="noopener">Wikimedia Commons</a> e
+      <a href="https://www.thesportsdb.com" target="_blank" rel="noopener">TheSportsDB</a>. Marcas e escudos pertencem aos seus clubes.</p>
+  </dialog>
+
+  <div class="toast" id="toast" role="status" aria-live="polite"></div>
+
+  <script type="module" src="assets/js/main.js"></script>
+</body>
+</html>
